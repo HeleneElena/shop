@@ -327,12 +327,14 @@ body {
       display: flex;
       justify-content: space-between;
       margin-top: 40px;
+      
 
       .go-back-btn {
         display: flex;
         align-items: center;
         justify-content: center;
         width: 210px;
+        margin-bottom: 50px;
 
         border-color: darken($color: $gray-line, $amount: 10);
 
@@ -365,6 +367,7 @@ body {
         font-weight: 600;
         width: 210px;
         padding: 16px;
+        margin-bottom: 50px;
       }
     }
   }
