@@ -1,17 +1,16 @@
-import { useState } from "react";
 
-export const Categories = () => {
+
+export const Categories = ({ categoryId, setCategoryId }) => {
     const LIST = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
-    const [active, setActive] = useState(0);
-
+    
     return (
        <div className="categories">
             <ul>
                 {
                     LIST.map((el, i) => {
                         return <li key={i} 
-                                   className={active === i ? "active" : ''}
-                                   onClick={() => setActive(i)}
+                                   className={categoryId === i ? "active" : ''}
+                                   onClick={() => setCategoryId(i)}
                                >{el}</li>
                     })
                 }
