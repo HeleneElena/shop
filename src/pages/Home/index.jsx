@@ -14,10 +14,11 @@ export const Home = () => {
     const [sortType, setSortType] = useState({
       name: 'популярности', sort: 'rating',
     });
+    const categorys = `${categoryId > 0 ? `category=${categoryId}` : ''}`;
 
     useEffect(() => {
         setIsLoading(true);
-        fetch(`https://63778c4d5c4777651220e948.mockapi.io/pizzas?category=${categoryId}&sort=${sortType}` )
+        fetch(`https://63778c4d5c4777651220e948.mockapi.io/pizzas?${categorys}&sortBy=${sortType.sort}&order=desc` )
         .then(res => res.json())
         .then(arr => {
             setData(arr);

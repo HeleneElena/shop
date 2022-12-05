@@ -1,14 +1,7 @@
 import logo from '../../assets/img/pizza-logo.svg';
-import { useContext } from 'react';
-import { SearchContext } from './../../App';
+import { Search } from '../../Search';
 
 export const Header = () => {
-  const {value, setValue} = useContext(SearchContext);
-
-  const handleChange = (e) => {
-    setValue(e.target.value);
-  };
-
   return (
       <div className="header">
       <div className="container">
@@ -19,11 +12,7 @@ export const Header = () => {
             <p>самая вкусная пицца во вселенной</p>
           </div>
         </div>
-        <input placeholder='Поиск...' 
-                type='text'
-                value={value}
-                onChange={handleChange}
-        />
+        <Search />
         <div className="header__cart">
           <a href="/cart" className="button button--cart">
             <span>520 ₽</span>

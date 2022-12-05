@@ -16,12 +16,12 @@ function App() {
     <div className="App">
       <div className="wrapper">
         <SearchContext.Provider value={{ value, setValue }}>
-        <Header />
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/cart' element={<Cart />} />
-          <Route path='*' element={<NotFound />} />
-        </Routes>
+          <Header />
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/cart' element={<Cart />} />
+            <Route path='*' element={<NotFound />} />
+          </Routes>
        </SearchContext.Provider>
       </div>
       
