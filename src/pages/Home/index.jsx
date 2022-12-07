@@ -1,30 +1,35 @@
-import { useContext } from 'react';
-import { SearchContext } from './../../App';
+
 import { useEffect, useState } from 'react';
 import { Categories } from './../../components/Categories';
 import { Sort } from './../../components/Sort';
 import Skeleton from './../../components/Skeleton';
 import { PizzaBlock } from './../../components/PizzaBlock';
 
-export const Home = () => {
+export const Home = ({ setValue }) => {
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const {value, setValue} = useContext(SearchContext);
     const [categoryId, setCategoryId] = useState(0);
     const [sortType, setSortType] = useState({
       name: 'популярности', sort: 'rating',
     });
-    const categorys = `${categoryId > 0 ? `category=${categoryId}` : ''}`;
 
     useEffect(() => {
-        setIsLoading(true);
-        fetch(`https://63778c4d5c4777651220e948.mockapi.io/pizzas?${categorys}&sortBy=${sortType.sort}&order=desc` )
+      setIsLoading(true);
+
+      const category = categoryId > 0 ? `category=${categoryId}` : '';
+      const search = setValue ? `&search=${setValue}` : '';
+
+        fetch(`https://63778c4d5c4777651220e948.mockapi.io/pizzas?${category}&sortBy=${sortType.sort}&order=desc${search}` )
         .then(res => res.json())
         .then(arr => {
             setData(arr);
             setIsLoading(false);
         });
-    }, [categoryId, sortType]);
+        window.scrollTo(0, 0);
+    }, [categoryId, sortType, setValue]);
+
+    const pizzas = data.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
+    const skeletons = [...new Array(6)].map((_, i) => <Skeleton key={i} />);
 
     return (
        <div className="content">
@@ -37,8 +42,8 @@ export const Home = () => {
           <div className="content__items">
             {
               isLoading 
-                ? [...new Array(6)].map((_, i) => <Skeleton key={i} />)
-                : data.map((data) => <PizzaBlock key={data.id} {...data} />)
+                ? skeletons
+                : pizzas
             }
           </div>
           </div>

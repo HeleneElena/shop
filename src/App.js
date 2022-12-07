@@ -7,7 +7,6 @@ import './scss/app.scss';
 import { NotFound } from './pages/NotFound';
 import { Cart } from './pages/Cart';
 
-export const SearchContext = React.createContext();
 
 function App() {
   const [value, setValue] = useState('');
@@ -15,14 +14,14 @@ function App() {
   return (
     <div className="App">
       <div className="wrapper">
-        <SearchContext.Provider value={{ value, setValue }}>
-          <Header />
+
+          <Header value={value} setValue={setValue} />
           <Routes>
-            <Route path='/' element={<Home />} />
+            <Route path='/' element={<Home value={value} setValue={() => setValue()} />} />
             <Route path='/cart' element={<Cart />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
-       </SearchContext.Provider>
+
       </div>
       
     </div>

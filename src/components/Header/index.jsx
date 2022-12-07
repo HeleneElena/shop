@@ -1,7 +1,7 @@
 import logo from '../../assets/img/pizza-logo.svg';
 import { Search } from '../../Search';
 
-export const Header = () => {
+export const Header = ({ value,setValue }) => {
   return (
       <div className="header">
       <div className="container">
@@ -12,7 +12,7 @@ export const Header = () => {
             <p>самая вкусная пицца во вселенной</p>
           </div>
         </div>
-        <Search />
+        <Search value={value} setValue={setValue} />
         <div className="header__cart">
           <a href="/cart" className="button button--cart">
             <span>520 ₽</span>

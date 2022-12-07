@@ -1,12 +1,10 @@
-import { useState } from 'react';
 import style from './Search.module.scss';
 import searchIcon from '../assets/img/searchIcon.png';
 
-export const Search = () => {
-    const [valSearch, setValSearch] = useState('');
+export const Search = ({ value, setValue }) => {
 
-    const handleChange = (e) => {
-        setValSearch(e.target.valSearch);
+    const changeValue = (e) => {
+        setValue(e.target.value);
     };
 
     return (
@@ -14,12 +12,12 @@ export const Search = () => {
             <input type="text"
                 placeholder='Поиск пиццы...'
                 className={style.root}  
-                value={valSearch}
-                onChange={handleChange}
+                value={value}
+                onChange={changeValue}
             />
             <img src={searchIcon} 
                  alt='search icon' 
-                 onClick={() => setValSearch('')}
+                 onClick={() => setValue('')}
                  className={style.icon}
             />
         </div>
