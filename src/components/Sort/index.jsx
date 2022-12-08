@@ -29,7 +29,7 @@ export const Sort = ({ sortType, setSortType }) => {
                     />
                 </svg>
                 <b>Сортировка по:</b>
-                <span onClick={() => setOpen(!open)}>{sortType.name}</span>
+                <span onClick={() => setOpen(!open)}>{sortType}</span>
             </div>
             {
                 open && (

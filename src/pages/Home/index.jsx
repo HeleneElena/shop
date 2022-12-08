@@ -1,52 +1,49 @@
-
+import { PizzaBlock } from '../../components/PizzaBlock';
+import Skeleton from '../../components/Skeleton';
+import { Categories } from '../../components/Categories';
+import { Sort } from '../../components/Sort';
 import { useEffect, useState } from 'react';
-import { Categories } from './../../components/Categories';
-import { Sort } from './../../components/Sort';
-import Skeleton from './../../components/Skeleton';
-import { PizzaBlock } from './../../components/PizzaBlock';
+import { Pagination } from '../../components/Pagination';
 
-export const Home = ({ setValue }) => {
-    const [data, setData] = useState([]);
+export const Home = ({searchValue}) => {
+    const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [categoryId, setCategoryId] = useState(0);
-    const [sortType, setSortType] = useState({
-      name: 'популярности', sort: 'rating',
-    });
-
+    const [activeCatigory, setActiveCatigory] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [active, setActive] = useState({name: 'популярности', sortProperty: 'rating'});
+    
     useEffect(() => {
-      setIsLoading(true);
+        setIsLoading(true);
+        const order = active.sortProperty.includes('-') ? 'asc' : 'desc';
+        const sortBy = active.sortProperty.replace('-', ''); 
+        const category = activeCatigory > 0 ? `category=${activeCatigory}` : '';
+        const search = searchValue > 0 ? `&search=${searchValue}` : '';
 
-      const category = categoryId > 0 ? `category=${categoryId}` : '';
-      const search = setValue ? `&search=${setValue}` : '';
-
-        fetch(`https://63778c4d5c4777651220e948.mockapi.io/pizzas?${category}&sortBy=${sortType.sort}&order=desc${search}` )
+        fetch(`https://635fa0523e8f65f283b7781a.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`,
+        )
         .then(res => res.json())
         .then(arr => {
-            setData(arr);
+            setItems(arr);
             setIsLoading(false);
         });
         window.scrollTo(0, 0);
-    }, [categoryId, sortType, setValue]);
-
-    const pizzas = data.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
-    const skeletons = [...new Array(6)].map((_, i) => <Skeleton key={i} />);
+    }, [activeCatigory, active, searchValue, currentPage]);
 
     return (
-       <div className="content">
-        <div className="container">
-          <div className="content__top">
-            <Categories categoryId={categoryId} setCategoryId={setCategoryId} />
-            <Sort sortType={sortType} setSortType={setSortType} />
-          </div>
-          <h2 className="content__title">Все пиццы</h2>
-          <div className="content__items">
-            {
-              isLoading 
-                ? skeletons
-                : pizzas
-            }
-          </div>
-          </div>
-      </div>
+        <div className="content">
+            <div className="container">
+                <div className="content__top">
+                    <Categories activeCatigory={activeCatigory} onClickCategory={(id) => setActiveCatigory(id)} pizzas={items} />
+                    <Sort active={active} onChangeSort={(id) => setActive(id)} />
+                </div>
+                <h2 className="content__title">Все пиццы</h2>
+                <div className="content__items">
+                {
+                    isLoading ? [...new Array(5)].map((_, index) => <Skeleton key={index} />) : items.map(obj => <PizzaBlock key={obj.id} {...obj} />)
+                }
+                </div>
+                <Pagination onChangePage={number => setCurrentPage(number)} />
+            </div>
+        </div>
     );
 };
