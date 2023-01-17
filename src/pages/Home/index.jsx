@@ -10,13 +10,15 @@ export const Home = () => {
     const [categoryId, setCategoryId] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [pizzas, setPizzas] = useState([]);
-    const [sort, setSort] = useState(0);
+    const [sort, setSort] = useState({name: 'популярности', sortProperty: 'rating'});
 
+    const sortItem = `sortBy=${sort.sortProperty}&order=desc`;
+    const categotyItem = categoryId > 0 ? `category=${categoryId}` : '';
 
       {/* Database */}
     useEffect(() => {
             setIsLoading(true);
-            fetch(`https://63778c4d5c4777651220e948.mockapi.io/pizzas?page=1&limit=5&category=` + categoryId)
+            fetch(`https://63778c4d5c4777651220e948.mockapi.io/pizzas?page=1&limit=7&${sortItem}&${categotyItem}`)
             .then(response => response.json())
             .then(arr => {
                 setPizzas(arr);
