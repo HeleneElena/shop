@@ -1,14 +1,13 @@
 import { useState } from 'react';
 
-export const Sort = () => {
+export const Sort = ({ sort, onClickSort }) => {
     const SORT = ['популярности', 'цене', 'алфавиту'];
     const [open, setOpen] = useState(false);
-    const [activeSort, setActiveSort] = useState(0);
-    const name = SORT[activeSort];
+    const name = SORT[sort];
 
     const chancheSort = (i) => {
       setOpen(false);
-      setActiveSort(i);
+      onClickSort(i);
     };
 
     return (
@@ -36,7 +35,7 @@ export const Sort = () => {
                             {
                                 SORT.map((el, i) => {
                                     return <li key={i} 
-                                              className={activeSort === i ? 'active' : ''}
+                                              className={sort === i ? 'active' : ''}
                                               onClick={() => chancheSort(i)}
                                           >{el}</li>
                                 })
