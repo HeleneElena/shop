@@ -3,7 +3,8 @@ import { useState } from 'react';
 export const Sort = ({ sort, onClickSort }) => {
     const SORT = [
       {name: 'популярности', sortProperty: 'rating'},
-      {name: 'цене', sortProperty: 'price'},
+      {name: 'цене по убыванию', sortProperty: '-price'},
+      {name: 'цене по возрастанию', sortProperty: 'price'},
       {name: 'алфавиту', sortProperty: 'title'},
     ];
     const [open, setOpen] = useState(false);

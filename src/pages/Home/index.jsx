@@ -12,7 +12,8 @@ export const Home = () => {
     const [pizzas, setPizzas] = useState([]);
     const [sort, setSort] = useState({name: 'популярности', sortProperty: 'rating'});
 
-    const sortItem = `sortBy=${sort.sortProperty}&order=desc`;
+    const order = sort.sortProperty.includes('-') ? 'desc' : 'asc';
+    const sortItem = `sortBy=${sort.sortProperty.replace('-', '')}&order=${order}`;
     const categotyItem = categoryId > 0 ? `category=${categoryId}` : '';
 
       {/* Database */}
